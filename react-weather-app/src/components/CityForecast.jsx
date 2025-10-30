@@ -1,8 +1,6 @@
 import {useState, useEffect, useRef} from "react"
 import {mockWeatherData} from "./data"
-/*
-function CityForecast ({city})
-*/
+
 const CityForecast = ({city, setCurrentPage}) =>
 {
     const [weatherData, setWeatherData] = useState(null);
@@ -27,33 +25,19 @@ const CityForecast = ({city, setCurrentPage}) =>
         setCurrentPage("CityList");
     };
 
-    /*
-    let displaySummary = "";
-    let displayDetails = "";
-    */
-
     if (loading) 
     {
         return <p>Loading data...</p>;
     }
 
-
     if (!weatherData || !weatherData[city]) 
     {
-        return !city ? <p>Please select a city.</p> : <p>Weather data for {city} not found.</p>
+        return (!city ? <p>Please select a city.</p> 
+        : (<div className="summary">
+            <p>Weather data for {city} not found.</p> 
+            <button onClick={handleReturn}>Select a new city</button>
+            </div>));                        
     }
-/*
-    useEffect(() =>
-    {
-        console.log(`City updated: ${city}`);
-        displaySummary = weatherData[city].summary;
-        displayDetails = weatherData[city].details;
-    }, [city]
-
-    );
-*/
-
-
 
     return (
         <main>
@@ -64,21 +48,16 @@ const CityForecast = ({city, setCurrentPage}) =>
                 <p>Summary: {weatherData[city].summary}</p>
             </div>
 
-            <div className="spacer">
-                
+            <div className="spacer">                
                 Add lots of senseless advertising here...
             </div>
             
             <div ref={detailedWeatherRef} className="detail">
                 <p>Detail: {weatherData[city].details}</p>
-            </div>
-            
-            
+            </div>            
         </main>
-    )
+    );
 }
-/*
-        <p>{weatherData[{city}].summary}</p>
-*/
 
 export default CityForecast;
+
